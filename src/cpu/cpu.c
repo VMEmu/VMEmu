@@ -84,7 +84,10 @@ enum {
     CPUID_CLFLUSH   = (1 << 19), /* CLFLUSH instruction */
     CPUID_MMX       = (1 << 23), /* MMX technology */
     CPUID_FXSR      = (1 << 24), /* FXSAVE and FXRSTOR instructions */
-    CPUID_SSE       = (1 << 25)  /* SSE Instructions */
+    CPUID_SSE       = (1 << 25), /* SSE Instructions */
+    CPUID_SSE2      = (1 << 26),
+
+    CPUID_SSE3      = (1 << 0)
 };
 
 /* Additional flags returned by CPUID function 0x80000001 */

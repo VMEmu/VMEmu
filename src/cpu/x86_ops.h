@@ -182,12 +182,26 @@ extern const OpFn dynarec_ops_sf_fpu_686_db_a32[256];
 extern const OpFn dynarec_ops_sf_fpu_686_df_a16[256];
 extern const OpFn dynarec_ops_sf_fpu_686_df_a32[256];
 
+extern const OpFn dynarec_ops_sf_fpu_sse3_db_a16[256];
+extern const OpFn dynarec_ops_sf_fpu_sse3_db_a32[256];
+extern const OpFn dynarec_ops_sf_fpu_sse3_dd_a16[256];
+extern const OpFn dynarec_ops_sf_fpu_sse3_dd_a32[256];
+extern const OpFn dynarec_ops_sf_fpu_sse3_df_a16[256];
+extern const OpFn dynarec_ops_sf_fpu_sse3_df_a32[256];
+
 extern const OpFn dynarec_ops_fpu_686_da_a16[256];
 extern const OpFn dynarec_ops_fpu_686_da_a32[256];
 extern const OpFn dynarec_ops_fpu_686_db_a16[256];
 extern const OpFn dynarec_ops_fpu_686_db_a32[256];
 extern const OpFn dynarec_ops_fpu_686_df_a16[256];
 extern const OpFn dynarec_ops_fpu_686_df_a32[256];
+
+extern const OpFn dynarec_ops_fpu_sse3_db_a16[256];
+extern const OpFn dynarec_ops_fpu_sse3_db_a32[256];
+extern const OpFn dynarec_ops_fpu_sse3_dd_a16[256];
+extern const OpFn dynarec_ops_fpu_sse3_dd_a32[256];
+extern const OpFn dynarec_ops_fpu_sse3_df_a16[256];
+extern const OpFn dynarec_ops_fpu_sse3_df_a32[256];
 
 extern const OpFn dynarec_ops_REPE[1024];
 extern const OpFn dynarec_ops_REPNE[1024];
@@ -331,12 +345,26 @@ extern const OpFn ops_sf_fpu_686_db_a32[256];
 extern const OpFn ops_sf_fpu_686_df_a16[256];
 extern const OpFn ops_sf_fpu_686_df_a32[256];
 
+extern const OpFn ops_sf_fpu_sse3_db_a16[256];
+extern const OpFn ops_sf_fpu_sse3_db_a32[256];
+extern const OpFn ops_sf_fpu_sse3_dd_a16[256];
+extern const OpFn ops_sf_fpu_sse3_dd_a32[256];
+extern const OpFn ops_sf_fpu_sse3_df_a16[256];
+extern const OpFn ops_sf_fpu_sse3_df_a32[256];
+
 extern const OpFn ops_fpu_686_da_a16[256];
 extern const OpFn ops_fpu_686_da_a32[256];
 extern const OpFn ops_fpu_686_db_a16[256];
 extern const OpFn ops_fpu_686_db_a32[256];
 extern const OpFn ops_fpu_686_df_a16[256];
 extern const OpFn ops_fpu_686_df_a32[256];
+
+extern const OpFn ops_fpu_sse3_db_a16[256];
+extern const OpFn ops_fpu_sse3_db_a32[256];
+extern const OpFn ops_fpu_sse3_dd_a16[256];
+extern const OpFn ops_fpu_sse3_dd_a32[256];
+extern const OpFn ops_fpu_sse3_df_a16[256];
+extern const OpFn ops_fpu_sse3_df_a32[256];
 
 extern const OpFn ops_REPE[1024];
 extern const OpFn ops_REPNE[1024];
