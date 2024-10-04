@@ -28,6 +28,7 @@ add_library(chipset OBJECT
     ali1621.c
     ali6117.c
     ali1409.c
+    amd751.c
     headland.c
     ims8848.c
     intel_82335.c
@@ -37,6 +38,8 @@ add_library(chipset OBJECT
     intel_420ex.c
     intel_4x0.c
     intel_i450kx.c
+    intel_815ep.c
+    intel_ich2.c
     intel_sio.c
     intel_piix.c
     ../ioapic.c

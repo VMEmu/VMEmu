@@ -25,8 +25,11 @@ add_library(dev OBJECT
     hwm_lm75.c
     hwm_lm78.c
     hwm_gl518sm.c
+    hwm_nsc366.c
     hwm_vt82c686.c
     ibm_5161.c
+    intel_ich2_gpio.c
+    intel_ich2_trap.c
     isamem.c
     isartc.c
     ../lpt.c
