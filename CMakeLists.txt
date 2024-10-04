@@ -35,10 +35,10 @@ if(MUNT_EXTERNAL)
     list(APPEND VCPKG_MANIFEST_FEATURES "munt")
 endif()
 
-project(86Box
+project(VMEmu
     VERSION 4.2.2
     DESCRIPTION "Emulator of x86-based systems"
-    HOMEPAGE_URL "https://86box.net"
+    HOMEPAGE_URL "https://vmemu.github.io"
     LANGUAGES C CXX)
 
 include(CPack)
