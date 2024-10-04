@@ -642,6 +642,9 @@ extern uint32_t eip_msr;
 extern SSE_REG  XMM[8];
 extern uint32_t mxcsr;
 
+#define MXCSR_DAZ 0x0040
+#define MXCSR_FTZ 0x8000
+
 /* For the AMD K6. */
 extern uint64_t amd_efer;
 extern uint64_t star;
