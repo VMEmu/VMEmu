@@ -58,6 +58,7 @@ add_library(dev OBJECT
     serial_passthrough.c
     novell_cardkey.c
     mouse_microtouch_touchscreen.c
+    tco.c
 )
 
 if(NOT CMAKE_CXX_COMPILER_ID MATCHES "Clang")
