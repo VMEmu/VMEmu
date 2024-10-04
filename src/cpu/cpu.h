@@ -450,6 +450,21 @@ typedef struct {
     uint32_t _smbase;
 } cpu_state_t;
 
+typedef struct
+{
+    x86reg regs64[8];
+    uint32_t regs_high[16];
+    uint32_t pc_high;
+    uint32_t oldpc_high;
+    uint32_t mxcsr;
+    SSE_REG XMM[16];
+    uint64_t cr8;
+    uint32_t cr2_high;
+    uint32_t cr3_high;
+    uint8_t rex_byte;
+    int rex_present;
+} cpu_state_high_t;
+
 #define in_smm   cpu_state._in_smm
 #define smi_line cpu_state._smi_line
 
@@ -532,6 +547,7 @@ COMPILE_TIME_ASSERT(sizeof(cpu_state_t) <= 128)
 
 /* Global variables. */
 extern cpu_state_t cpu_state;
+extern cpu_state_high_t cpu_state_high;
 
 extern const cpu_family_t         cpu_families[];
 extern cpu_family_t              *cpu_f;
