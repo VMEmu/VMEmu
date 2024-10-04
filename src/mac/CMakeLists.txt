@@ -35,7 +35,7 @@ target_sources(VMEmu PRIVATE ${APP_ICON_MACOSX})
 
 # Make sure the icon is copied to the bundle
 set_source_files_properties(${APP_ICON_MACOSX}
-    TARGET_DIRECTORY 86Box
+    TARGET_DIRECTORY VMEmu
     PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
 # Prepare long version string
