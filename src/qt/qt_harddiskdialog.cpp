@@ -200,16 +200,16 @@ HarddiskDialog::on_comboBoxFormat_currentIndexChanged(int index)
  * than a tenth of a percent change in size.
  */
 static void
-adjust_86box_geometry_for_vhd(MVHDGeom *_86box_geometry, MVHDGeom *vhd_geometry)
+adjust_vmemu_geometry_for_vhd(MVHDGeom *_vmemu_geometry, MVHDGeom *vhd_geometry)
 {
-    if (_86box_geometry->cyl <= 65535) {
-        vhd_geometry->cyl   = _86box_geometry->cyl;
-        vhd_geometry->heads = _86box_geometry->heads;
-        vhd_geometry->spt   = _86box_geometry->spt;
+    if (_vmemu_geometry->cyl <= 65535) {
+        vhd_geometry->cyl   = _vmemu_geometry->cyl;
+        vhd_geometry->heads = _vmemu_geometry->heads;
+        vhd_geometry->spt   = _vmemu_geometry->spt;
         return;
     }
 
-    int desired_sectors = _86box_geometry->cyl * _86box_geometry->heads * _86box_geometry->spt;
+    int desired_sectors = _vmemu_geometry->cyl * _vmemu_geometry->heads * _vmemu_geometry->spt;
     if (desired_sectors > 267321600)
         desired_sectors = 267321600;
 
@@ -217,9 +217,9 @@ adjust_86box_geometry_for_vhd(MVHDGeom *_86box_geometry, MVHDGeom *vhd_geometry)
     if (remainder > 0)
         desired_sectors += (85680 - remainder);
 
-    _86box_geometry->cyl   = desired_sectors / (16 * 63);
-    _86box_geometry->heads = 16;
-    _86box_geometry->spt   = 63;
+    _vmemu_geometry->cyl   = desired_sectors / (16 * 63);
+    _vmemu_geometry->heads = 16;
+    _vmemu_geometry->spt   = 63;
 
     vhd_geometry->cyl   = desired_sectors / (16 * 255);
     vhd_geometry->heads = 16;
@@ -230,9 +230,9 @@ static HarddiskDialog *callbackPtr = nullptr;
 static MVHDGeom
 create_drive_vhd_fixed(const QString &fileName, HarddiskDialog *p, uint16_t cyl, uint8_t heads, uint8_t spt)
 {
-    MVHDGeom _86box_geometry = { .cyl = cyl, .heads = heads, .spt = spt };
+    MVHDGeom _vmemu_geometry = { .cyl = cyl, .heads = heads, .spt = spt };
     MVHDGeom vhd_geometry;
-    adjust_86box_geometry_for_vhd(&_86box_geometry, &vhd_geometry);
+    adjust_vmemu_geometry_for_vhd(&_vmemu_geometry, &vhd_geometry);
 
     int        vhd_error     = 0;
     QByteArray filenameBytes = fileName.toUtf8();
@@ -243,22 +243,22 @@ create_drive_vhd_fixed(const QString &fileName, HarddiskDialog *p, uint16_t cyl,
     callbackPtr              = nullptr;
 
     if (vhd == NULL) {
-        _86box_geometry.cyl   = 0;
-        _86box_geometry.heads = 0;
-        _86box_geometry.spt   = 0;
+        _vmemu_geometry.cyl   = 0;
+        _vmemu_geometry.heads = 0;
+        _vmemu_geometry.spt   = 0;
     } else {
         mvhd_close(vhd);
     }
 
-    return _86box_geometry;
+    return _vmemu_geometry;
 }
 
 static MVHDGeom
 create_drive_vhd_dynamic(const QString &fileName, uint16_t cyl, uint8_t heads, uint8_t spt, int blocksize)
 {
-    MVHDGeom _86box_geometry = { .cyl = cyl, .heads = heads, .spt = spt };
+    MVHDGeom _vmemu_geometry = { .cyl = cyl, .heads = heads, .spt = spt };
     MVHDGeom vhd_geometry;
-    adjust_86box_geometry_for_vhd(&_86box_geometry, &vhd_geometry);
+    adjust_vmemu_geometry_for_vhd(&_vmemu_geometry, &vhd_geometry);
     int                 vhd_error     = 0;
     QByteArray          filenameBytes = fileName.toUtf8();
     MVHDCreationOptions options;
@@ -270,14 +270,14 @@ create_drive_vhd_dynamic(const QString &fileName, uint16_t cyl, uint8_t heads, u
 
     MVHDMeta *vhd = mvhd_create_ex(options, &vhd_error);
     if (vhd == NULL) {
-        _86box_geometry.cyl   = 0;
-        _86box_geometry.heads = 0;
-        _86box_geometry.spt   = 0;
+        _vmemu_geometry.cyl   = 0;
+        _vmemu_geometry.heads = 0;
+        _vmemu_geometry.spt   = 0;
     } else {
         mvhd_close(vhd);
     }
 
-    return _86box_geometry;
+    return _vmemu_geometry;
 }
 
 static MVHDGeom
@@ -402,20 +402,20 @@ HarddiskDialog::onCreateNewFile()
     } else if (img_format >= IMG_FMT_VHD_FIXED) { /* VHD file */
         file.close();
 
-        MVHDGeom _86box_geometry {};
+        MVHDGeom _vmemu_geometry {};
         int      block_size = ui->comboBoxBlockSize->currentIndex() == 0 ? MVHD_BLOCK_LARGE : MVHD_BLOCK_SMALL;
         switch (img_format) {
             case IMG_FMT_VHD_FIXED:
                 {
                     connect(this, &HarddiskDialog::fileProgress, this, [this](int value) { ui->progressBar->setValue(value); QApplication::processEvents(); });
                     ui->progressBar->setVisible(true);
-                    [&_86box_geometry, fileName, this] {
-                        _86box_geometry = create_drive_vhd_fixed(fileName, this, cylinders_, heads_, sectors_);
+                    [&_vmemu_geometry, fileName, this] {
+                        _vmemu_geometry = create_drive_vhd_fixed(fileName, this, cylinders_, heads_, sectors_);
                     }();
                 }
                 break;
             case IMG_FMT_VHD_DYNAMIC:
-                _86box_geometry = create_drive_vhd_dynamic(fileName, cylinders_, heads_, sectors_, block_size);
+                _vmemu_geometry = create_drive_vhd_dynamic(fileName, cylinders_, heads_, sectors_, block_size);
                 break;
             case IMG_FMT_VHD_DIFF:
                 QString vhdParent = QFileDialog::getOpenFileName(
@@ -427,23 +427,23 @@ HarddiskDialog::onCreateNewFile()
                 if (vhdParent.isEmpty()) {
                     return;
                 }
-                _86box_geometry = create_drive_vhd_diff(fileName, vhdParent, block_size);
+                _vmemu_geometry = create_drive_vhd_diff(fileName, vhdParent, block_size);
                 break;
         }
 
-        if (_86box_geometry.cyl == 0 && _86box_geometry.heads == 0 && _86box_geometry.spt == 0) {
+        if (_vmemu_geometry.cyl == 0 && _vmemu_geometry.heads == 0 && _vmemu_geometry.spt == 0) {
             QMessageBox::critical(this, tr("Unable to write file"), tr("Make sure the file is being saved to a writable directory."));
             return;
         } else if (img_format != IMG_FMT_VHD_DIFF) {
             QMessageBox::information(this, tr("Disk image created"), tr("Remember to partition and format the newly-created drive."));
         }
 
-        ui->lineEditCylinders->setText(QString::number(_86box_geometry.cyl));
-        ui->lineEditHeads->setText(QString::number(_86box_geometry.heads));
-        ui->lineEditSectors->setText(QString::number(_86box_geometry.spt));
-        cylinders_ = _86box_geometry.cyl;
-        heads_     = _86box_geometry.heads;
-        sectors_   = _86box_geometry.spt;
+        ui->lineEditCylinders->setText(QString::number(_vmemu_geometry.cyl));
+        ui->lineEditHeads->setText(QString::number(_vmemu_geometry.heads));
+        ui->lineEditSectors->setText(QString::number(_vmemu_geometry.spt));
+        cylinders_ = _vmemu_geometry.cyl;
+        heads_     = _vmemu_geometry.heads;
+        sectors_   = _vmemu_geometry.spt;
         setResult(QDialog::Accepted);
 
         return;

@@ -30,7 +30,7 @@ endif()
 
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 find_package(Threads REQUIRED)
-target_link_libraries(86Box Threads::Threads)
+target_link_libraries(VMEmu Threads::Threads)
 
 add_library(ui OBJECT
     unix_sdl.c

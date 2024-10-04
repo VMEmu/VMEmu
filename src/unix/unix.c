@@ -930,10 +930,10 @@ monitor_thread(void *param)
                 break;
 #ifdef ENABLE_READLINE
             if (f_readline)
-                line = f_readline("(86Box) ");
+                line = f_readline("(VMEmu) ");
             else {
 #endif
-                printf("(86Box) ");
+                printf("(VMEmu) ");
                 (void) !getline(&line, &n, stdin);
 #ifdef ENABLE_READLINE
             }

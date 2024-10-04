@@ -235,7 +235,7 @@ plat_getcwd(char *bufp, int max)
     strncpy(bufp, exe_path, max);
 #else
     CharPointer(bufp, max) = QDir::homePath().toUtf8();
-    path_append_filename(bufp, bufp, "Library/86Box");
+    path_append_filename(bufp, bufp, "Library/VMEmu");
 #endif
 #else
     CharPointer(bufp, max) = QDir::currentPath().toUtf8();
@@ -697,10 +697,10 @@ plat_init_rom_paths(void)
 
     for (auto &path : paths) {
 #ifdef __APPLE__
-        rom_add_path(QDir(path).filePath("net.86Box.86Box/roms").toUtf8().constData());
-        rom_add_path(QDir(path).filePath("86Box/roms").toUtf8().constData());
+        rom_add_path(QDir(path).filePath("net.VMEmu.VMEmu/roms").toUtf8().constData());
+        rom_add_path(QDir(path).filePath("86box/roms").toUtf8().constData());
 #else
-        rom_add_path(QDir(path).filePath("86Box/roms").toUtf8().constData());
+        rom_add_path(QDir(path).filePath("86box/roms").toUtf8().constData());
 #endif
     }
 }

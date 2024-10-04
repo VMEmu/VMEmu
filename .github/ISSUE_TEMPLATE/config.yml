@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: Machine Request
-    url:  https://github.com/86Box/86Box/issues/3577#issue-comment-box
+    url:  https://github.com/VMEmu/VMEmu/issues/3577#issue-comment-box
     about: Please submit machine addition requests under this tracking issue.
   - name: Feature Request or Question
-    url:  https://github.com/86Box/86Box/discussions
+    url:  https://github.com/VMEmu/VMEmu/discussions
     about: Please submit feature requests and ask questions here.

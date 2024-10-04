@@ -219,7 +219,7 @@ void
 Settings::accept()
 {
     if (confirm_save && !settings_only) {
-        QMessageBox questionbox(QMessageBox::Icon::Question, "86Box",
+        QMessageBox questionbox(QMessageBox::Icon::Question, "VMEmu",
                                 QStringLiteral("%1\n\n%2").arg(tr("Do you want to save the settings?"),
                                 tr("This will hard reset the emulated machine.")),
                                 QMessageBox::Save | QMessageBox::Cancel, this);

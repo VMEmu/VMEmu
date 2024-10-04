@@ -202,7 +202,7 @@ main(int argc, char *argv[])
     ProgSettings::loadTranslators(&app);
 #ifdef Q_OS_WINDOWS
     QApplication::setFont(QFont(ProgSettings::getFontName(lang_id), 9));
-    SetCurrentProcessExplicitAppUserModelID(L"86Box.86Box");
+    SetCurrentProcessExplicitAppUserModelID(L"VMEmu.VMEmu");
 #endif
 
 #ifndef Q_OS_MACOS
@@ -217,13 +217,13 @@ main(int argc, char *argv[])
 #    endif
 
 #    ifdef Q_OS_UNIX
-    app.setDesktopFileName("net.86box.86Box");
+    app.setDesktopFileName("net.VMEmu.VMEmu");
 #    endif
 #endif
 
     if (!pc_init_modules()) {
         QMessageBox fatalbox(QMessageBox::Icon::Critical, QObject::tr("No ROMs found"),
-                             QObject::tr("86Box could not find any usable ROM images.\n\nPlease <a href=\"https://github.com/86Box/roms/releases/latest\">download</a> a ROM set and extract it into the \"roms\" directory."),
+                             QObject::tr("VMEmu could not find any usable ROM images.\n\nPlease <a href=\"https://github.com/86Box/roms/releases/latest\">download</a> a ROM set and extract it into the \"roms\" directory."),
                              QMessageBox::Ok);
         fatalbox.setTextFormat(Qt::TextFormat::RichText);
         fatalbox.exec();
@@ -349,7 +349,7 @@ main(int argc, char *argv[])
 #endif
 
     UnixManagerSocket socket;
-    if (qgetenv("86BOX_MANAGER_SOCKET").size()) {
+    if (qgetenv("vmemu_MANAGER_SOCKET").size()) {
         QObject::connect(&socket, &UnixManagerSocket::showsettings, main_window, &MainWindow::showSettings);
         QObject::connect(&socket, &UnixManagerSocket::pause, main_window, &MainWindow::togglePause);
         QObject::connect(&socket, &UnixManagerSocket::resetVM, main_window, &MainWindow::hardReset);
@@ -360,7 +360,7 @@ main(int argc, char *argv[])
         });
         QObject::connect(&socket, &UnixManagerSocket::ctrlaltdel, []() { pc_send_cad(); });
         main_window->installEventFilter(&socket);
-        socket.connectToServer(qgetenv("86BOX_MANAGER_SOCKET"));
+        socket.connectToServer(qgetenv("vmemu_MANAGER_SOCKET"));
     }
 
     // pc_reset_hard_init();

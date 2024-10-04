@@ -127,7 +127,7 @@ save_buildtag() {
 }
 
 # Set common variables.
-project=86Box
+project=VMEmu
 cwd=$(pwd)
 
 # Parse arguments.

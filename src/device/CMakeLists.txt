@@ -58,7 +58,7 @@ add_library(dev OBJECT
 )
 
 if(NOT CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-    target_link_libraries(86Box atomic)
+    target_link_libraries(VMEmu atomic)
 endif()
 
 if(ISAMEM_RAMPAGE)

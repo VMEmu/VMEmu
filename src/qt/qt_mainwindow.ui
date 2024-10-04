@@ -211,7 +211,7 @@
      <string>&amp;Help</string>
     </property>
     <addaction name="actionDocumentation"/>
-    <addaction name="actionAbout_86Box"/>
+    <addaction name="actionAbout_VMEmu"/>
     <addaction name="actionAbout_Qt"/>
    </widget>
    <addaction name="menuAction"/>
@@ -690,7 +690,7 @@
     <enum>QAction::AboutQtRole</enum>
    </property>
   </action>
-  <action name="actionAbout_86Box">
+  <action name="actionAbout_VMEmu">
    <property name="text">
     <string>&amp;About 86Box...</string>
    </property>

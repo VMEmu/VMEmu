@@ -1,28 +1,28 @@
-# Fedora RPM spec file for 86Box including roms
+# Fedora RPM spec file for VMEmu including roms
 #
 # To create RPM files from this spec file, run the following commands:
 #  sudo dnf install rpm-build
 #  mkdir -p ~/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 #
-# copy this 86Box.spec file to ~/rpmbuild/SPECS and run the following commands:
+# copy this VMEmu.spec file to ~/rpmbuild/SPECS and run the following commands:
 #  cd ~/rpmbuild
-#  sudo dnf builddep SPECS/86Box.spec
-#  rpmbuild --undefine=_disable_source_fetch -ba SPECS/86Box.spec
+#  sudo dnf builddep SPECS/VMEmu.spec
+#  rpmbuild --undefine=_disable_source_fetch -ba SPECS/VMEmu.spec
 #
 # After a successful build, you can install the RPMs as follows:
-#  sudo dnf install RPMS/$(uname -m)/86Box-3* RPMS/noarch/86Box-roms*
+#  sudo dnf install RPMS/$(uname -m)/VMEmu-3* RPMS/noarch/VMEmu-roms*
 
 %global romver 4.1
 
-Name:		86Box
+Name:		VMEmu
 Version:	4.2.2
 Release:	1%{?dist}
 Summary:	Classic PC emulator
 License:	GPLv2+
-URL:		https://86box.net
+URL:		https://vmemu.github.io
 
-Source0:	https://github.com/86Box/86Box/archive/refs/tags/v%{version}.tar.gz
-Source1:	https://github.com/86Box/roms/archive/refs/tags/v%{romver}.zip
+Source0:	https://github.com/VMEmu/VMEmu/archive/refs/tags/v%{version}.tar.gz
+Source1:	https://github.com/VMEmu/roms/archive/refs/tags/v%{romver}.zip
 
 BuildRequires: cmake
 BuildRequires: desktop-file-utils
@@ -49,10 +49,10 @@ BuildRequires: SDL2-devel
 
 Requires: hicolor-icon-theme
 Requires: fluid-soundfont-gm
-Requires: 86Box-roms
+Requires: VMEmu-roms
 
 %description
-86Box is a hypervisor and IBM PC system emulator that specializes in
+VMEmu is a hypervisor and IBM PC system emulator that specializes in
 running old operating systems and software designed for IBM
 PC systems and compatibles from 1981 through fairly recent
 system designs based on the PCI bus.
@@ -60,13 +60,13 @@ system designs based on the PCI bus.
 It supports various models of PCs, graphics and sound cards, and CPUs.
 
 %package	roms
-Summary:	ROMs for use with 86Box
+Summary:	ROMs for use with VMEmu
 Version:	%{romver}
 License:	Proprietary
 BuildArch:	noarch
 
 %description	roms
-Collection of ROMs for use with 86Box.
+Collection of ROMs for use with VMEmu.
 
 %prep
 %autosetup -p1 -a1
@@ -110,7 +110,7 @@ popd
 # files part of the main package
 %files
 %license COPYING
-%{_bindir}/86Box
+%{_bindir}/VMEmu
 %{_datadir}/applications/net.86box.86Box.desktop
 %{_metainfodir}/net.86box.86Box.metainfo.xml
 %{_datadir}/icons/hicolor/*/apps/net.86box.86Box.png

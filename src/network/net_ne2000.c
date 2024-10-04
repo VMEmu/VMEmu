@@ -1010,7 +1010,7 @@ nic_init(const device_t *info)
             break;
 
         case NE2K_NE2000_COMPAT_8BIT:
-            dev->maclocal[0] = 0x00; /* 00:86:B0 (86Box OID) */
+            dev->maclocal[0] = 0x00; /* 00:86:B0 (VMEmu OID) */
             dev->maclocal[1] = 0x86;
             dev->maclocal[2] = 0xB0;
             dev->is_8bit     = 1;

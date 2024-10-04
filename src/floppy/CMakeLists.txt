@@ -33,4 +33,4 @@ add_library(fdd OBJECT
 )
 
 add_subdirectory(lzw)
-target_link_libraries(86Box lzw)
+target_link_libraries(VMEmu lzw)

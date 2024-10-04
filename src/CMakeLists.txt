@@ -20,7 +20,7 @@ if(APPLE)
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 endif()
 
-add_executable(86Box
+add_executable(VMEmu
     86box.c
     config.c
     log.c
@@ -57,12 +57,12 @@ if(CMAKE_SYSTEM_NAME MATCHES "Linux")
 endif()
 
 if(CPPTHREADS)
-    target_sources(86Box PRIVATE thread.cpp)
+    target_sources(VMEmu PRIVATE thread.cpp)
 endif()
 
 if(GDBSTUB)
     add_compile_definitions(USE_GDBSTUB)
-    target_sources(86Box PRIVATE gdbstub.c)
+    target_sources(VMEmu PRIVATE gdbstub.c)
 endif()
 
 if(NEW_DYNAREC)
@@ -79,7 +79,7 @@ endif()
 
 if(DISCORD)
     add_compile_definitions(DISCORD)
-    target_sources(86Box PRIVATE discord.c)
+    target_sources(VMEmu PRIVATE discord.c)
 endif()
 
 if(DEBUGREGS486)
@@ -94,9 +94,9 @@ if(VNC)
             vnc.c
             vnc_keymap.c
         )
-        target_link_libraries(86Box vnc LibVNCServer::vncserver)
+        target_link_libraries(VMEmu vnc LibVNCServer::vncserver)
         if(WIN32)
-            target_link_libraries(86Box ws2_32)
+            target_link_libraries(VMEmu ws2_32)
         endif()
     endif()
 endif()
@@ -105,20 +105,20 @@ if(INSTRUMENT)
     add_compile_definitions(USE_INSTRUMENT)
 endif()
 
-target_link_libraries(86Box cpu chipset mch dev mem fdd game cdrom zip mo hdd
+target_link_libraries(VMEmu cpu chipset mch dev mem fdd game cdrom zip mo hdd
     net print scsi sio snd vid voodoo plat ui)
 
 if(WIN32 AND ARCH STREQUAL "i386")
     if(MINGW)
-        target_link_options(86Box PRIVATE "LINKER:--large-address-aware")
+        target_link_options(VMEmu PRIVATE "LINKER:--large-address-aware")
     else()
-        target_link_options(86Box PRIVATE "LINKER:/LARGEADDRESSAWARE")
+        target_link_options(VMEmu PRIVATE "LINKER:/LARGEADDRESSAWARE")
     endif()
 endif()
 
 if(STATIC_BUILD)
     if(MINGW OR UNIX)
-        target_link_options(86Box PRIVATE "-static")
+        target_link_options(VMEmu PRIVATE "-static")
         set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
     endif()
 endif()
@@ -148,22 +148,22 @@ endif()
 if(APPLE)
     # Freetype is dynamically loaded by the emulator, however, we link it
     # on macOS so it gets copied to the bundle by the installation process
-    target_link_libraries(86Box Freetype::Freetype)
+    target_link_libraries(VMEmu Freetype::Freetype)
 endif()
 
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 if(STATIC_BUILD AND TARGET SDL2::SDL2-static)
-    target_link_libraries(86Box SDL2::SDL2-static)
+    target_link_libraries(VMEmu SDL2::SDL2-static)
 elseif(TARGET SDL2::SDL2)
-    target_link_libraries(86Box SDL2::SDL2)
+    target_link_libraries(VMEmu SDL2::SDL2)
 else()
-    target_link_libraries(86Box ${SDL2_LIBRARIES})
+    target_link_libraries(VMEmu ${SDL2_LIBRARIES})
 endif()
 
 find_package(PNG REQUIRED)
 include_directories(${PNG_INCLUDE_DIRS})
-target_link_libraries(86Box PNG::PNG)
+target_link_libraries(VMEmu PNG::PNG)
 
 configure_file(include/86box/version.h.in include/86box/version.h @ONLY)
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
@@ -190,7 +190,7 @@ endif()
 if(MINITRACE)
     add_compile_definitions(MTR_ENABLED)
     add_library(minitrace OBJECT minitrace/minitrace.c)
-    target_link_libraries(86Box minitrace)
+    target_link_libraries(VMEmu minitrace)
 endif()
 
 if(WIN32 OR (APPLE AND CMAKE_MACOSX_BUNDLE))

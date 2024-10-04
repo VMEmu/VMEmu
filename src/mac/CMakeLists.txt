@@ -30,8 +30,8 @@ else()
     set(APP_ICON_MACOSX icons/branch/86Box.icns)
 endif()
 
-target_link_libraries(86Box "-framework AppKit")
-target_sources(86Box PRIVATE ${APP_ICON_MACOSX})
+target_link_libraries(VMEmu "-framework AppKit")
+target_sources(VMEmu PRIVATE ${APP_ICON_MACOSX})
 
 # Make sure the icon is copied to the bundle
 set_source_files_properties(${APP_ICON_MACOSX}
@@ -47,7 +47,7 @@ endif()
 
 # Generate Info.plist
 configure_file(Info.plist.in Info.plist @ONLY)
-set_target_properties(86Box
+set_target_properties(VMEmu
     PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_BINARY_DIR}/Info.plist)
 
 #set(XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED "YES")
