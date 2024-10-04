@@ -195,16 +195,16 @@ endif()
 
 if(WIN32 OR (APPLE AND CMAKE_MACOSX_BUNDLE))
     # Copy the binary to the root of the install prefix on Windows and macOS
-    install(TARGETS 86Box DESTINATION ".")
+    install(TARGETS VMEmu DESTINATION ".")
 else()
     # On Linux we want to copy the binary to the `bin` folder.
-    install(TARGETS 86Box)
+    install(TARGETS VMEmu)
 endif()
 
 
 # Install our dependencies if using vcpkg
 if(VCPKG_TOOLCHAIN)
-    x_vcpkg_install_local_dependencies(TARGETS 86Box DESTINATION ".")
+    x_vcpkg_install_local_dependencies(TARGETS VMEmu DESTINATION ".")
 endif()
 
 
@@ -213,13 +213,13 @@ if(WIN32)
     install(CODE "
         include(BundleUtilities)
         get_filename_component(CMAKE_INSTALL_PREFIX_ABSOLUTE \${CMAKE_INSTALL_PREFIX} ABSOLUTE)
-        fixup_bundle(\"\${CMAKE_INSTALL_PREFIX_ABSOLUTE}/$<TARGET_FILE_NAME:86Box>\" \"\" \"\")"
+        fixup_bundle(\"\${CMAKE_INSTALL_PREFIX_ABSOLUTE}/$<TARGET_FILE_NAME:VMEmu>\" \"\" \"\")"
     COMPONENT Runtime)
 elseif(APPLE AND NOT QT)
     install(CODE "
         include(BundleUtilities)
         get_filename_component(CMAKE_INSTALL_PREFIX_ABSOLUTE \${CMAKE_INSTALL_PREFIX} ABSOLUTE)
-        fixup_bundle(\"\${CMAKE_INSTALL_PREFIX_ABSOLUTE}/86Box.app\" \"\" \"\")"
+        fixup_bundle(\"\${CMAKE_INSTALL_PREFIX_ABSOLUTE}/VMEmu.app\" \"\" \"\")"
     COMPONENT Runtime)
 endif()
 
@@ -227,7 +227,7 @@ endif()
 # Install the PDB file on Windows builds
 if(MSVC)
     # CMake fully supports PDB files on MSVC-compatible compilers
-    install(FILES $<TARGET_PDB_FILE:86Box>
+    install(FILES $<TARGET_PDB_FILE:VMEmu>
         CONFIGURATIONS Debug RelWithDebInfo
         DESTINATION ".")
 elseif(WIN32)
@@ -235,7 +235,7 @@ elseif(WIN32)
     # emit PDB files when targeting Windows, however, CMake only supports
     # the relevant properties with MSVC and clones. Try to install
     # the PDB file assuming it's in the same path as the EXE.
-    install(FILES "$<TARGET_FILE_DIR:86Box>/$<TARGET_FILE_BASE_NAME:86Box>.pdb"
+    install(FILES "$<TARGET_FILE_DIR:VMEmu>/$<TARGET_FILE_BASE_NAME:VMEmu>.pdb"
         CONFIGURATIONS Debug RelWithDebInfo
         DESTINATION "."
         OPTIONAL)
