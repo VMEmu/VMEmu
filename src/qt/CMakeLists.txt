@@ -304,7 +304,7 @@ if(WIN32)
                 get_filename_component(CMAKE_INSTALL_PREFIX_ABSOLUTE \${CMAKE_INSTALL_PREFIX} ABSOLUTE)
                 execute_process(
                     COMMAND $<TARGET_FILE:Qt${QT_MAJOR}::windeployqt>
-                    \"\${CMAKE_INSTALL_PREFIX_ABSOLUTE}/$<TARGET_FILE_NAME:86Box>\")
+                    \"\${CMAKE_INSTALL_PREFIX_ABSOLUTE}/$<TARGET_FILE_NAME:VMEmu>\")
             ")
         else()
             find_program(WINDEPLOYQT_EXECUTABLE windeployqt)
@@ -313,7 +313,7 @@ if(WIN32)
                     get_filename_component(CMAKE_INSTALL_PREFIX_ABSOLUTE \${CMAKE_INSTALL_PREFIX} ABSOLUTE)
                     execute_process(
                         COMMAND ${WINDEPLOYQT_EXECUTABLE}
-                        \"\${CMAKE_INSTALL_PREFIX_ABSOLUTE}/$<TARGET_FILE_NAME:86Box>\")
+                        \"\${CMAKE_INSTALL_PREFIX_ABSOLUTE}/$<TARGET_FILE_NAME:VMEmu>\")
                 ")
             endif()
         endif()
