@@ -236,6 +236,7 @@ video_cards[] = {
     { &s3_virge_357_agp_device                         },
     { &s3_diamond_stealth_4000_agp_device              },
     { &s3_trio3d2x_agp_device                          },
+    { &rivatnt2m64_device                              },
 #ifdef USE_G100
     { &productiva_g100_device, VIDEO_FLAG_TYPE_SPECIAL },
 #endif /*USE_G100 */

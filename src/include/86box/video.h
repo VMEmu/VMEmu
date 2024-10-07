@@ -451,6 +451,9 @@ extern const device_t millennium_ii_device;
 extern const device_t productiva_g100_device;
 #endif /* USE_G100 */
 
+/* nVidia RIVA TNT2 */
+extern const device_t rivatnt2m64_device;
+
 /* Oak OTI-0x7 */
 extern const device_t oti037c_device;
 extern const device_t oti067_device;
