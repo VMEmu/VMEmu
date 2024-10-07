@@ -50,8 +50,11 @@ typedef struct rivatnt2m64_t
   uint16_t rma_addr;
 
   uint8_t pci_regs[256];
+  uint8_t pci_slot;
+  uint8_t irq_state;
+  uint8_t int_line;
 
-  int memory_size;
+  uint32_t memory_size;
 
   uint8_t ext_regs_locked;
 
@@ -184,7 +187,7 @@ static void rivatnt2m64_mmio_write_l(uint32_t addr, uint32_t val, void *p);
 static uint8_t rivatnt2m64_pmc_read(uint32_t addr, void *p)
 {
   rivatnt2m64_t *rivatnt2m64 = (rivatnt2m64_t *)p;
-  svga_t *svga = &rivatnt2m64->svga;
+  //svga_t *svga = &rivatnt2m64->svga;
   uint8_t ret = 0;
 
   //pclog("RIVA TNT PMC read %08X %04X:%08X\n", addr, CS, cpu_state.pc);
@@ -219,7 +222,7 @@ static uint8_t rivatnt2m64_pmc_read(uint32_t addr, void *p)
 static void rivatnt2m64_pmc_write(uint32_t addr, uint32_t val, void *p)
 {
   rivatnt2m64_t *rivatnt2m64 = (rivatnt2m64_t *)p;
-  svga_t *svga = &rivatnt2m64->svga;
+  //svga_t *svga = &rivatnt2m64->svga;
   //pclog("RIVA TNT PMC write %08X %08X %04X:%08X\n", addr, val, CS, cpu_state.pc);
 
   switch(addr)
@@ -241,7 +244,7 @@ static void rivatnt2m64_pmc_write(uint32_t addr, uint32_t val, void *p)
 static uint8_t rivatnt2m64_pbus_read(uint32_t addr, void *p)
 {
   rivatnt2m64_t *rivatnt2m64 = (rivatnt2m64_t *)p;
-  svga_t *svga = &rivatnt2m64->svga;
+  //svga_t *svga = &rivatnt2m64->svga;
   uint8_t ret = 0;
 
   //pclog("RIVA TNT PBUS read %08X %04X:%08X\n", addr, CS, cpu_state.pc);
@@ -265,7 +268,7 @@ static uint8_t rivatnt2m64_pbus_read(uint32_t addr, void *p)
 static void rivatnt2m64_pbus_write(uint32_t addr, uint32_t val, void *p)
 {
   rivatnt2m64_t *rivatnt2m64 = (rivatnt2m64_t *)p;
-  svga_t *svga = &rivatnt2m64->svga;
+  //svga_t *svga = &rivatnt2m64->svga;
   //pclog("RIVA TNT PBUS write %08X %08X %04X:%08X\n", addr, val, CS, cpu_state.pc);
 
   switch(addr)
@@ -288,10 +291,10 @@ static void rivatnt2m64_pbus_write(uint32_t addr, uint32_t val, void *p)
 static uint8_t rivatnt2m64_pfifo_read(uint32_t addr, void *p)
 {
   rivatnt2m64_t *rivatnt2m64 = (rivatnt2m64_t *)p;
-  svga_t *svga = &rivatnt2m64->svga;
+  //svga_t *svga = &rivatnt2m64->svga;
   uint8_t ret = 0;
 
-  pclog("RIVA TNT PFIFO read %08X %04X:%08X\n", addr, CS, cpu_state.pc);
+  //pclog("RIVA TNT PFIFO read %08X %04X:%08X\n", addr, CS, cpu_state.pc);
 
   switch(addr)
   {
@@ -342,8 +345,8 @@ static uint8_t rivatnt2m64_pfifo_read(uint32_t addr, void *p)
 static void rivatnt2m64_pfifo_write(uint32_t addr, uint32_t val, void *p)
 {
   rivatnt2m64_t *rivatnt2m64 = (rivatnt2m64_t *)p;
-  svga_t *svga = &rivatnt2m64->svga;
-  pclog("RIVA TNT PFIFO write %08X %08X %04X:%08X\n", addr, val, CS, cpu_state.pc);
+  //svga_t *svga = &rivatnt2m64->svga;
+  //pclog("RIVA TNT PFIFO write %08X %08X %04X:%08X\n", addr, val, CS, cpu_state.pc);
 
   switch(addr)
   {
@@ -400,7 +403,7 @@ static void rivatnt2m64_pfifo_write(uint32_t addr, uint32_t val, void *p)
 static uint8_t rivatnt2m64_ptimer_read(uint32_t addr, void *p)
 {
   rivatnt2m64_t *rivatnt2m64 = (rivatnt2m64_t *)p;
-  svga_t *svga = &rivatnt2m64->svga;
+  //svga_t *svga = &rivatnt2m64->svga;
   uint8_t ret = 0;
 
   //pclog("RIVA TNT PTIMER read %08X %04X:%08X\n", addr, CS, cpu_state.pc);
@@ -422,7 +425,7 @@ static uint8_t rivatnt2m64_ptimer_read(uint32_t addr, void *p)
 static uint8_t rivatnt2m64_pfb_read(uint32_t addr, void *p)
 {
   rivatnt2m64_t *rivatnt2m64 = (rivatnt2m64_t *)p;
-  svga_t *svga = &rivatnt2m64->svga;
+  //svga_t *svga = &rivatnt2m64->svga;
   uint8_t ret = 0;
 
   //pclog("RIVA TNT PFB read %08X %04X:%08X\n", addr, CS, cpu_state.pc);
@@ -453,7 +456,7 @@ static uint8_t rivatnt2m64_pfb_read(uint32_t addr, void *p)
 static void rivatnt2m64_pfb_write(uint32_t addr, uint32_t val, void *p)
 {
   rivatnt2m64_t *rivatnt2m64 = (rivatnt2m64_t *)p;
-  svga_t *svga = &rivatnt2m64->svga;
+  //svga_t *svga = &rivatnt2m64->svga;
   //pclog("RIVA TNT PFB write %08X %08X %04X:%08X\n", addr, val, CS, cpu_state.pc);
 
   switch(addr)
@@ -474,7 +477,7 @@ static void rivatnt2m64_pfb_write(uint32_t addr, uint32_t val, void *p)
 static uint8_t rivatnt2m64_pextdev_read(uint32_t addr, void *p)
 {
   rivatnt2m64_t *rivatnt2m64 = (rivatnt2m64_t *)p;
-  svga_t *svga = &rivatnt2m64->svga;
+  //svga_t *svga = &rivatnt2m64->svga;
   uint8_t ret = 0;
 
   //pclog("RIVA TNT PEXTDEV read %08X %04X:%08X\n", addr, CS, cpu_state.pc);
@@ -491,10 +494,10 @@ static uint8_t rivatnt2m64_pextdev_read(uint32_t addr, void *p)
 static uint8_t rivatnt2m64_pgraph_read(uint32_t addr, void *p)
 {
   rivatnt2m64_t *rivatnt2m64 = (rivatnt2m64_t *)p;
-  svga_t *svga = &rivatnt2m64->svga;
+  //svga_t *svga = &rivatnt2m64->svga;
   uint8_t ret = 0;
 
-  pclog("RIVA TNT PGRAPH read %08X %04X:%08X\n", addr, CS, cpu_state.pc);
+  //pclog("RIVA TNT PGRAPH read %08X %04X:%08X\n", addr, CS, cpu_state.pc);
 
   switch(addr)
   {
@@ -510,7 +513,7 @@ static uint8_t rivatnt2m64_pgraph_read(uint32_t addr, void *p)
 static uint8_t rivatnt2m64_pramdac_read(uint32_t addr, void *p)
 {
   rivatnt2m64_t *rivatnt2m64 = (rivatnt2m64_t *)p;
-  svga_t *svga = &rivatnt2m64->svga;
+  //svga_t *svga = &rivatnt2m64->svga;
   uint8_t ret = 0;
 
   //pclog("RIVA TNT PRAMDAC read %08X %04X:%08X\n", addr, CS, cpu_state.pc);
@@ -582,7 +585,7 @@ static uint8_t rivatnt2m64_ramht_lookup(uint32_t handle, void *p)
 {
   rivatnt2m64_t *rivatnt2m64 = (rivatnt2m64_t *)p;
   svga_t *svga = &rivatnt2m64->svga;
-  pclog("RIVA TNT RAMHT lookup with handle %08X %04X:%08X\n", handle, CS, cpu_state.pc);
+  //pclog("RIVA TNT RAMHT lookup with handle %08X %04X:%08X\n", handle, CS, cpu_state.pc);
   
   uint8_t objclass;
   
@@ -617,15 +620,15 @@ static uint8_t rivatnt2m64_ramht_lookup(uint32_t handle, void *p)
 static void rivatnt2m64_pgraph_exec_method(int chanid, int subchanid, int offset, uint32_t val, void *p)
 {
   rivatnt2m64_t *rivatnt2m64 = (rivatnt2m64_t *)p;
-  svga_t *svga = &rivatnt2m64->svga;
-  pclog("RIVA TNT PGRAPH executing method %04X on channel %01X %04X:%08X\n", offset, chanid, val, CS, cpu_state.pc);
+  //svga_t *svga = &rivatnt2m64->svga;
+  //pclog("RIVA TNT PGRAPH executing method %04X on channel %01X %04X:%08X\n", offset, chanid, val, CS, cpu_state.pc);
 }
 
 static void rivatnt2m64_puller_exec_method(int chanid, int subchanid, int offset, uint32_t val, void *p)
 {
   rivatnt2m64_t *rivatnt2m64 = (rivatnt2m64_t *)p;
-  svga_t *svga = &rivatnt2m64->svga;
-  pclog("RIVA TNT Puller executing method %04X on channel %01X[%01X] %04X:%08X\n", offset, chanid, subchanid, val, CS, cpu_state.pc);
+  //svga_t *svga = &rivatnt2m64->svga;
+  //pclog("RIVA TNT Puller executing method %04X on channel %01X[%01X] %04X:%08X\n", offset, chanid, subchanid, val, CS, cpu_state.pc);
   
   if(offset < 0x100)
   {
@@ -645,8 +648,8 @@ static void rivatnt2m64_puller_exec_method(int chanid, int subchanid, int offset
 static void rivatnt2m64_user_write(uint32_t addr, uint32_t val, void *p)
 {
   rivatnt2m64_t *rivatnt2m64 = (rivatnt2m64_t *)p;
-  svga_t *svga = &rivatnt2m64->svga;
-  pclog("RIVA TNT USER write %08X %08X %04X:%08X\n", addr, val, CS, cpu_state.pc);
+  //svga_t *svga = &rivatnt2m64->svga;
+  //pclog("RIVA TNT USER write %08X %08X %04X:%08X\n", addr, val, CS, cpu_state.pc);
   
   addr -= 0x800000;
   
@@ -662,12 +665,12 @@ static void rivatnt2m64_user_write(uint32_t addr, uint32_t val, void *p)
 static uint8_t rivatnt2m64_mmio_read(uint32_t addr, void *p)
 {
   rivatnt2m64_t *rivatnt2m64 = (rivatnt2m64_t *)p;
-  svga_t *svga = &rivatnt2m64->svga;
+  //svga_t *svga = &rivatnt2m64->svga;
   uint8_t ret = 0;
 
   addr &= 0xffffff;
 
-  pclog("RIVA TNT MMIO read %08X %04X:%08X\n", addr, CS, cpu_state.pc);
+  //pclog("RIVA TNT MMIO read %08X %04X:%08X\n", addr, CS, cpu_state.pc);
 
   switch(addr)
   {
@@ -688,6 +691,9 @@ static uint8_t rivatnt2m64_mmio_read(uint32_t addr, void *p)
   break;
   case 0x101000 ... 0x101fff:
   ret = rivatnt2m64_pextdev_read(addr, rivatnt2m64);
+  break;
+  case 0x400000 ... 0x400fff:
+  ret = rivatnt2m64_pgraph_read(addr, rivatnt2m64);
   break;
   case 0x6013b4 ... 0x6013b5: case 0x6013d4 ... 0x6013d5: case 0x0c03c2 ... 0x0c03c5: case 0x0c03cc ... 0x0c03cf:
   ret = rivatnt2m64_in(addr & 0xfff, rivatnt2m64);
@@ -743,11 +749,11 @@ static void rivatnt2m64_mmio_write_w(uint32_t addr, uint16_t val, void *p)
 static void rivatnt2m64_mmio_write_l(uint32_t addr, uint32_t val, void *p)
 {
   rivatnt2m64_t *rivatnt2m64 = (rivatnt2m64_t *)p;
-  svga_t *svga = &rivatnt2m64->svga;
+  //svga_t *svga = &rivatnt2m64->svga;
 
   addr &= 0xffffff;
 
-  pclog("RIVA TNT MMIO write %08X %08X %04X:%08X\n", addr, val, CS, cpu_state.pc);
+  //pclog("RIVA TNT MMIO write %08X %08X %04X:%08X\n", addr, val, CS, cpu_state.pc);
 
   switch(addr)
   {
@@ -775,13 +781,13 @@ static void rivatnt2m64_mmio_write_l(uint32_t addr, uint32_t val, void *p)
 static void rivatnt2m64_poll(void *p)
 {
 	rivatnt2m64_t *rivatnt2m64 = (rivatnt2m64_t *)p;
-	svga_t *svga = &rivatnt2m64->svga;
+	//svga_t *svga = &rivatnt2m64->svga;
 }
 
 static uint8_t rivatnt2m64_rma_in(uint16_t addr, void *p)
 {
   rivatnt2m64_t *rivatnt2m64 = (rivatnt2m64_t *)p;
-  svga_t *svga = &rivatnt2m64->svga;
+  //svga_t *svga = &rivatnt2m64->svga;
   uint8_t ret = 0;
 
   addr &= 0xff;
@@ -983,7 +989,7 @@ static void rivatnt2m64_out(uint16_t addr, uint8_t val, void *p)
 static uint8_t rivatnt2m64_pci_read(int func, int addr, void *p)
 {
   rivatnt2m64_t *rivatnt2m64 = (rivatnt2m64_t *)p;
-  svga_t *svga = &rivatnt2m64->svga;
+  //svga_t *svga = &rivatnt2m64->svga;
   uint8_t ret = 0;
   //pclog("RIVA TNT PCI read %02X %04X:%08X\n", addr, CS, cpu_state.pc);
   switch (addr)
@@ -1057,7 +1063,7 @@ static void rivatnt2m64_pci_write(int func, int addr, uint8_t val, void *p)
 {
   //pclog("RIVA TNT PCI write %02X %02X %04X:%08X\n", addr, val, CS, cpu_state.pc);
   rivatnt2m64_t *rivatnt2m64 = (rivatnt2m64_t *)p;
-  svga_t *svga = &rivatnt2m64->svga;
+  //svga_t *svga = &rivatnt2m64->svga;
   switch (addr)
   {
     case 0x00: case 0x01: case 0x02: case 0x03:
@@ -1078,10 +1084,6 @@ static void rivatnt2m64_pci_write(int func, int addr, uint8_t val, void *p)
 
     case 0x05:
     rivatnt2m64->pci_regs[0x05] = val;
-    return;
-
-    case 0x07:
-    rivatnt2m64->pci_regs[0x07] = (rivatnt2m64->pci_regs[0x07] & 0x8f) | (val & 0x70);
     return;
 
     case 0x13:
@@ -1187,14 +1189,14 @@ static void rivatnt2m64_recalctimings(svga_t *svga)
   }
 }
 
-static void *rivatnt2m64_init()
+static void *rivatnt2m64_init(const device_t *info)
 {
   rivatnt2m64_t *rivatnt2m64 = malloc(sizeof(rivatnt2m64_t));
   memset(rivatnt2m64, 0, sizeof(rivatnt2m64_t));
 
   rivatnt2m64->memory_size = device_get_config_int("memory");
 
-  svga_init(&rivatnt2m64->svga, rivatnt2m64, rivatnt2m64->memory_size << 20,
+  svga_init(info, &rivatnt2m64->svga, rivatnt2m64, rivatnt2m64->memory_size << 20,
   rivatnt2m64_recalctimings,
   rivatnt2m64_in, rivatnt2m64_out,
   NULL, NULL);
