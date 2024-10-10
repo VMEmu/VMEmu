@@ -319,6 +319,9 @@ extern const device_t mach64gx_vlb_device;
 extern const device_t mach64gx_pci_device;
 extern const device_t mach64vt2_device;
 
+/* ATi Rage */
+extern const device_t atirageiic_device;
+
 /* ATi 18800 */
 extern const device_t ati18800_wonder_device;
 extern const device_t ati18800_vga88_device;
