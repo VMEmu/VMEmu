@@ -800,56 +800,6 @@ enum {
     ATI_INVALID               = 0xFFFF
 };
 
-static int atirage_reg_names = {
-    #define one_reg_name(x) {ATI_ ## x, #x}
-    one_reg_name(CRTC_H_TOTAL_DISP),
-    one_reg_name(CRTC_H_SYNC_STRT_WID),
-    one_reg_name(CRTC_V_TOTAL_DISP),
-    one_reg_name(CRTC_V_SYNC_STRT_WID),
-    one_reg_name(CRTC_VLINE_CRNT_VLINE),
-    one_reg_name(CRTC_OFF_PITCH),
-    one_reg_name(CRTC_INT_CNTL),
-    one_reg_name(CRTC_GEN_CNTL),
-    one_reg_name(DSP_CONFIG),
-    one_reg_name(DSP_ON_OFF),
-    one_reg_name(MEM_BUF_CNTL),
-    one_reg_name(MEM_ADDR_CFG),
-    one_reg_name(OVR_CLR),
-    one_reg_name(OVR_WID_LEFT_RIGHT),
-    one_reg_name(OVR_WID_TOP_BOTTOM),
-    one_reg_name(CUR_CLR0),
-    one_reg_name(CUR_CLR1),
-    one_reg_name(CUR_OFFSET),
-    one_reg_name(CUR_HORZ_VERT_POSN),
-    one_reg_name(CUR_HORZ_VERT_OFF),
-    one_reg_name(GP_IO),
-    one_reg_name(HW_DEBUG),
-    one_reg_name(SCRATCH_REG0),
-    one_reg_name(SCRATCH_REG1),
-    one_reg_name(SCRATCH_REG2),
-    one_reg_name(SCRATCH_REG3),
-    one_reg_name(CLOCK_CNTL),
-    one_reg_name(BUS_CNTL),
-    one_reg_name(EXT_MEM_CNTL),
-    one_reg_name(MEM_CNTL),
-    one_reg_name(DAC_REGS),
-    one_reg_name(DAC_CNTL),
-    one_reg_name(GEN_TEST_CNTL),
-    one_reg_name(CUSTOM_MACRO_CNTL),
-    one_reg_name(CONFIG_CHIP_ID),
-    one_reg_name(CONFIG_STAT0),
-    one_reg_name(SRC_CNTL),
-    one_reg_name(SCALE_3D_CNTL),
-    one_reg_name(FIFO_STAT),
-    one_reg_name(GUI_STAT),
-    one_reg_name(MPP_CONFIG),
-    one_reg_name(MPP_STROBE_SEQ),
-    one_reg_name(MPP_ADDR),
-    one_reg_name(MPP_DATA),
-    one_reg_name(TVO_CNTL),
-    one_reg_name(SETUP_CNTL),
-};
-
 void
 atirage_out(uint16_t addr, uint8_t val, void *priv)
 {
@@ -1315,7 +1265,7 @@ atirage_ext_outl(uint16_t addr, uint32_t val, void *priv)
     //fatal("%s, 0x%04X, 0x%08X\n", __func__, addr, val);
 }
 
-uint16_t
+uint8_t
 atirage_reg1_in(uint32_t addr, void *priv)
 {
     atirage_t *atirage = (atirage_t *) priv;
@@ -1323,7 +1273,7 @@ atirage_reg1_in(uint32_t addr, void *priv)
 }
 
 void
-atirage_reg1_out(uint16_t addr, uint32_t val, void *priv)
+atirage_reg1_out(uint32_t addr, uint8_t val, void *priv)
 {
     atirage_t *atirage = (atirage_t *) priv;
     //fatal("%s, 0x%04X, 0x%08X\n", __func__, addr, val);
