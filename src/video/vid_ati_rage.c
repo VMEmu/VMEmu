@@ -1386,7 +1386,7 @@ atirage_pci_read(UNUSED(int func), int addr, void *priv)
             return 0x03;
 
         case 0x10:
-            return 0x08
+            return 0x08;
         case 0x11:
             return 0x00;
         case 0x12:
