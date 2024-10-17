@@ -191,7 +191,7 @@ rivatnt2m64_pci_read(int func, int addr, void *p)
     case 0x3c: return rivatnt2m64->int_line;
     case 0x3d: return PCI_INTA;
 
-    case 0x3e: return 0x03;
+    case 0x3e: return 0x05;
     case 0x3f: return 0x01;
 
     case 0x44: return 0x02;
@@ -241,7 +241,7 @@ rivatnt2m64_recalc_mapping(rivatnt2m64_t *rivatnt2m64)
 
     //pclog("rivatnt2m64->lfb_base = %08X\n", rivatnt2m64->lfb_base);
     if (rivatnt2m64->lfb_base) {
-    mem_mapping_set_addr(&rivatnt2m64->linear_mapping, rivatnt2m64->lfb_base, 0x2000000);
+    mem_mapping_set_addr(&rivatnt2m64->linear_mapping, rivatnt2m64->lfb_base, 0x1000000);
     } else {
         mem_mapping_disable(&rivatnt2m64->linear_mapping);
     }
@@ -691,7 +691,6 @@ rivatnt2m64_mmio_read_l(uint32_t addr, void *p)
     case 0x6013da:
     case 0x6013c0:
     case 0x0c03c2: case 0x0c03c3: case 0x0c03c4: case 0x0c03c5: case 0x0c03cc:
-    case 0x6813c6: case 0x6813c7: case 0x6813c8: case 0x6813c9: case 0x6813ca: case 0x6813cb:
         ret = (rivatnt2m64_in((addr+0) & 0x3ff,p) << 0) | (rivatnt2m64_in((addr+1) & 0x3ff,p) << 8) | (rivatnt2m64_in((addr+2) & 0x3ff,p) << 16) | (rivatnt2m64_in((addr+3) & 0x3ff,p) << 24);
         break;
     }
@@ -735,7 +734,6 @@ rivatnt2m64_mmio_read(uint32_t addr, void *p)
     case 0x6013da:
     case 0x6013c0:
     case 0x0c03c2: case 0x0c03c3: case 0x0c03c4: case 0x0c03c5: case 0x0c03cc:
-    case 0x6813c6: case 0x6813c7: case 0x6813c8: case 0x6813c9: case 0x6813ca: case 0x6813cb:
         return rivatnt2m64_in(addr & 0x3ff,p);
         break;
     }
@@ -762,7 +760,6 @@ rivatnt2m64_mmio_read_w(uint32_t addr, void *p)
     case 0x6013da:
     case 0x6013c0:
     case 0x0c03c2: case 0x0c03c3: case 0x0c03c4: case 0x0c03c5: case 0x0c03cc:
-    case 0x6813c6: case 0x6813c7: case 0x6813c8: case 0x6813c9: case 0x6813ca: case 0x6813cb:
         return (rivatnt2m64_in((addr+0) & 0x3ff,p) << 0) | (rivatnt2m64_in((addr+1) & 0x3ff,p) << 8);
         break;
     }
@@ -801,7 +798,6 @@ rivatnt2m64_mmio_write_l(uint32_t addr, uint32_t val, void *p)
     case 0x6013da:
     case 0x6013c0:
     case 0x0c03c2: case 0x0c03c3: case 0x0c03c4: case 0x0c03c5: case 0x0c03cc:
-    case 0x6813c6: case 0x6813c7: case 0x6813c8: case 0x6813c9: case 0x6813ca: case 0x6813cb:
         rivatnt2m64_out(addr & 0xfff, val & 0xff, p);
         rivatnt2m64_out((addr+1) & 0xfff, (val>>8) & 0xff, p);
         rivatnt2m64_out((addr+2) & 0xfff, (val>>16) & 0xff, p);
@@ -829,7 +825,6 @@ rivatnt2m64_mmio_write(uint32_t addr, uint8_t val, void *p)
     case 0x6013da:
     case 0x6013c0:
     case 0x0c03c2: case 0x0c03c3: case 0x0c03c4: case 0x0c03c5: case 0x0c03cc:
-    case 0x6813c6: case 0x6813c7: case 0x6813c8: case 0x6813c9: case 0x6813ca: case 0x6813cb:
         rivatnt2m64_out(addr & 0xfff, val & 0xff, p);
         return;
     }
@@ -861,7 +856,6 @@ rivatnt2m64_mmio_write_w(uint32_t addr, uint16_t val, void *p)
     case 0x6013da:
     case 0x6013c0:
     case 0x0c03c2: case 0x0c03c3: case 0x0c03c4: case 0x0c03c5: case 0x0c03cc:
-    case 0x6813c6: case 0x6813c7: case 0x6813c8: case 0x6813c9: case 0x6813ca: case 0x6813cb:
         rivatnt2m64_out(addr & 0xfff, val & 0xff, p);
         rivatnt2m64_out(addr & 0xfff, val >> 8, p);
         return;
@@ -1086,16 +1080,12 @@ rivatnt2m64_recalctimings(svga_t *svga)
 {
     rivatnt2m64_t *rivatnt2m64 = (rivatnt2m64_t *)svga->priv;
 
-    svga->ma_latch += (svga->crtc[0x19] & 0x1f) << 16;
-    svga->rowoffset += (svga->crtc[0x19] & 0xe0) << 3;
     if (svga->crtc[0x25] & 0x01) svga->vtotal      += 0x400;
     if (svga->crtc[0x25] & 0x02) svga->dispend     += 0x400;
     if (svga->crtc[0x25] & 0x04) svga->vblankstart += 0x400;
     if (svga->crtc[0x25] & 0x08) svga->vsyncstart  += 0x400;
     if (svga->crtc[0x25] & 0x10) svga->htotal      += 0x100;
     if (svga->crtc[0x2d] & 0x01) svga->hdisp       += 0x100;  
-    /* The effects of the large screen bit seem to just be doubling the row offset.
-       However, these large modes still don't work. Possibly core SVGA bug? It does report 640x2 res after all. */
 
     switch(svga->crtc[0x28] & 3) {
     case 1:
