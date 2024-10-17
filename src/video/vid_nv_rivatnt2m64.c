@@ -35,7 +35,7 @@
 #include <86box/vid_svga.h>
 #include <86box/vid_svga_render.h>
 
-#define BIOS_RIVATNT2M64_PATH   "roms/video/nvidia/w2137.rom"
+#define BIOS_RIVATNT2M64_PATH   "roms/video/nvidia/asus_125-143mhz32mb.rom"
 
 #define RIVATNT2M64_VENDOR_ID 0x10de
 #define RIVATNT2M64_DEVICE_ID 0x002d
@@ -1185,6 +1185,11 @@ static void
     rivatnt2m64->pci_regs[0x04] = 0x07;
     rivatnt2m64->pci_regs[0x05] = 0x00;
     rivatnt2m64->pci_regs[0x07] = 0x02;
+
+    rivatnt2m64->pci_regs[0x2c] = 0x43;
+    rivatnt2m64->pci_regs[0x2d] = 0x10;
+    rivatnt2m64->pci_regs[0x2e] = 0x21;
+    rivatnt2m64->pci_regs[0x2f] = 0x02;
 
     rivatnt2m64->pci_regs[0x30] = 0x00;
     rivatnt2m64->pci_regs[0x32] = 0x0c;
